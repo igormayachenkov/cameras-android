@@ -1,4 +1,4 @@
-package ru.igormayachenkov.eprotection_cameras.workspace
+package ru.igormayachenkov.eprotection_cameras.auth
 
 data class Workspace(
     val id  : String,
