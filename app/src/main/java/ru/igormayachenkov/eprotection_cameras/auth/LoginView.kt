@@ -1,20 +1,28 @@
-package ru.igormayachenkov.eprotection_cameras.user
+package ru.igormayachenkov.eprotection_cameras.auth
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import ru.igormayachenkov.eprotection_cameras.auth.AuthViewModel
-import ru.igormayachenkov.eprotection_cameras.auth.User
+import androidx.compose.material.TextField
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import ru.igormayachenkov.eprotection_cameras.auth.AuthData
 
 @Composable
-fun LoginView(){
-    val viewModel: AuthViewModel = viewModel()
-    Column() {
-        Text(text = "Login Page",style = MaterialTheme.typography.h3)
-        Button(onClick = { viewModel.login("","")}) { Text(text = "Login") }
-        Button(onClick = { viewModel.closeWorkspace()}) { Text(text = "Close the workspace") }
+fun LoginView(auth: AuthData, onLogin:(String,String)->Unit, onCloseWorkspace:()->Unit){
+    var login    by rememberSaveable { mutableStateOf<String>("") }
+    var password by rememberSaveable { mutableStateOf<String>("") }
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = "Login Page",style = MaterialTheme.typography.h4)
+        Text(text = "ws: ${auth.ws?.name}",style = MaterialTheme.typography.h4)
+
+        TextField(value = login,    onValueChange = {login=it},    placeholder = {Text("login")})
+        TextField(value = password, onValueChange = {password=it}, placeholder = {Text("password")})
+
+
+        Button(onClick = { onLogin(login,password)}) { Text(text = "Login") }
+        Button(onClick = onCloseWorkspace ) { Text(text = "Close the workspace") }
     }
 }
