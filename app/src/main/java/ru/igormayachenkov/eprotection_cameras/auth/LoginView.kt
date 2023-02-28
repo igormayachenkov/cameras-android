@@ -15,8 +15,7 @@ fun LoginView(auth: AuthData, onLogin:(String,String)->Unit, onCloseWorkspace:()
     var login    by rememberSaveable { mutableStateOf<String>("") }
     var password by rememberSaveable { mutableStateOf<String>("") }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Login Page",style = MaterialTheme.typography.h4)
-        Text(text = "ws: ${auth.ws?.name}",style = MaterialTheme.typography.h4)
+        Text(text = "${auth.ws?.name}",style = MaterialTheme.typography.h4)
 
         TextField(value = login,    onValueChange = {login=it},    placeholder = {Text("login")})
         TextField(value = password, onValueChange = {password=it}, placeholder = {Text("password")})

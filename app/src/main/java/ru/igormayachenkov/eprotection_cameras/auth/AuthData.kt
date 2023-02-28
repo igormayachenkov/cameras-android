@@ -13,7 +13,7 @@ data class AuthData (
         fun fromJson(json:JSONObject?):AuthData =
             try {
                 AuthData(
-                    Workspace.fromJson(json!!.optJSONObject("ws")),
+                    Workspace.fromJsonOrNull(json!!.optJSONObject("ws")),
                     User.fromJson(json!!.optJSONObject("user"))
                 )
             }catch (_:Exception){

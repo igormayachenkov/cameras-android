@@ -1,32 +1,33 @@
 package ru.igormayachenkov.eprotection_cameras.auth
 
 import android.content.Context
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
-import kotlinx.coroutines.flow.*
 import ru.igormayachenkov.eprotection_cameras.App
 import ru.igormayachenkov.eprotection_cameras.dataStore
+import ru.igormayachenkov.eprotection_cameras.network.APINative
 
 class AuthRepository() {
     private val context:Context = App.instance
 
-    private val authDataSource = AuthLocalDataSource(dataStore = context.dataStore)
-    val authDataFlow = authDataSource.data
+    private val localDataSource = AuthLocalDataSource(dataStore = context.dataStore)
+    private val remoteDataSource= AuthRemoteDataSource(api = APINative())
+
+    // DATA FLOW (the source of true)
+    val authDataFlow = localDataSource.data
 
     suspend fun openWorkspace(wsId:String){
-        //_auth.value = _auth.value.copy( ws = Workspace(wsId, wsId.toUpperCase()) )
-        authDataSource.update(AuthData(Workspace(wsId,wsId.toUpperCase()),null) )
+        val ws = remoteDataSource.fetchWorkspaceInfo(wsId)
+        localDataSource.update(AuthData(ws,null) )
     }
     suspend fun closeWorkspace(){
         //_auth.value = _auth.value.copy( ws = null)
-        authDataSource.update(AuthData())
+        localDataSource.update(AuthData())
     }
     suspend fun login(login:String, password:String){
         //_auth.value = _auth.value.copy( user = User(13, login.toUpperCase()) )
-        authDataSource.updateUser(User(13, login.toUpperCase()) )
+        localDataSource.updateUser(User(13, login.toUpperCase()) )
     }
     suspend fun logout(){
-        authDataSource.updateUser( null )
+        localDataSource.updateUser( null )
     }
 
     // Counter ex

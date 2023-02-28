@@ -7,13 +7,15 @@ data class Workspace(
     val name: String?
 ) {
     companion object {
-        fun fromJson(json: JSONObject?) : Workspace? {
+        fun fromJson(json:JSONObject):Workspace =
+            Workspace(
+                json.getString("id"),
+                json.optString("name")
+            )
+        fun fromJsonOrNull(json: JSONObject?) : Workspace? {
             if(json==null) return null
             return try {
-                Workspace(
-                    json.getString("id"),
-                    json.optString("name")
-                )
+                fromJson(json)
             } catch (_:Exception){
                 null
             }
