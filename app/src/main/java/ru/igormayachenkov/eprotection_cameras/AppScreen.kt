@@ -1,7 +1,12 @@
 package ru.igormayachenkov.eprotection_cameras
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.igormayachenkov.eprotection_cameras.auth.AuthData
@@ -20,4 +25,14 @@ fun AppScreen(){
         else
             WorkScreen(it, viewModel::logout)
     }
+
+    if(viewModel.isLoading){
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = Color(0,0,0,120)
+        ) {
+            Text("LOADING...")
+        }
+    }
+
 }

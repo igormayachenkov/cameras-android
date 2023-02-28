@@ -19,11 +19,13 @@ class AuthLocalDataSource(val dataStore: DataStore<Preferences>) {
         }
     
     suspend fun update(authData:AuthData) {
+        delay(1500)
         dataStore.edit { preferences ->
             writeValue(preferences, authData)
         }
     }
     suspend fun updateUser(user:User?) {
+        delay(1500)
         dataStore.edit { preferences ->
             val authData = readValue(preferences)
             writeValue(preferences,  authData.copy(user=user))
