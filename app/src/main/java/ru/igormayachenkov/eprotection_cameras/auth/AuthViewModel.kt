@@ -5,13 +5,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
-    val repo = AuthRepository()
-
-    val auth = repo.auth
+    private val repo = AuthRepository()
 
     val authData = repo.authDataFlow
-
-    val counter = repo.exampleCounterFlow
 
     fun openWorkspace(wsId:String){
         //repo.openWorkspace(wsId)

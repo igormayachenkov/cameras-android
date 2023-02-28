@@ -13,13 +13,12 @@ import kotlinx.coroutines.coroutineScope
 @Composable
 fun BeginView(
     auth:AuthData,
-    counter:Int,
     onOpenWorkspace:(String)->Unit
 ) {
     var wsid by rememberSaveable { mutableStateOf<String>("") }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Page Workspace #$counter")
+        Text(text = "Select the workspace")
         TextField(value = wsid, onValueChange = {wsid=it}, placeholder = {Text("workspace id")})
         Button(
             enabled = wsid.isNotEmpty(),

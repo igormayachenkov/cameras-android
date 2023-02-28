@@ -13,22 +13,6 @@ class AuthRepository() {
     private val authDataSource = AuthLocalDataSource(dataStore = context.dataStore)
     val authDataFlow = authDataSource.data
 
-    private val EXAMPLE_COUNTER = intPreferencesKey("example_counter")
-    val exampleCounterFlow: Flow<Int> = context.dataStore.data
-        .map { preferences ->
-            // No type safety.
-            preferences[EXAMPLE_COUNTER] ?: 0
-        }
-    suspend fun incrementCounter() {
-        context.dataStore.edit { settings ->
-            val currentCounterValue = settings[EXAMPLE_COUNTER] ?: 0
-            settings[EXAMPLE_COUNTER] = currentCounterValue + 1
-        }
-    }
-
-    private val _auth = MutableStateFlow<AuthData>(AuthData(null,null))
-    val auth:StateFlow<AuthData> = _auth.asStateFlow()
-
     suspend fun openWorkspace(wsId:String){
         //_auth.value = _auth.value.copy( ws = Workspace(wsId, wsId.toUpperCase()) )
         authDataSource.update(AuthData(Workspace(wsId,wsId.toUpperCase()),null) )
@@ -44,4 +28,22 @@ class AuthRepository() {
     suspend fun logout(){
         authDataSource.updateUser( null )
     }
+
+    // Counter ex
+//    private val EXAMPLE_COUNTER = intPreferencesKey("example_counter")
+//    val exampleCounterFlow: Flow<Int> = context.dataStore.data
+//        .map { preferences ->
+//            // No type safety.
+//            preferences[EXAMPLE_COUNTER] ?: 0
+//        }
+//    suspend fun incrementCounter() {
+//        context.dataStore.edit { settings ->
+//            val currentCounterValue = settings[EXAMPLE_COUNTER] ?: 0
+//            settings[EXAMPLE_COUNTER] = currentCounterValue + 1
+//        }
+//    }
+    // In-memory data ex
+//    private val _auth = MutableStateFlow<AuthData>(AuthData(null,null))
+//    val auth:StateFlow<AuthData> = _auth.asStateFlow()
+
 }

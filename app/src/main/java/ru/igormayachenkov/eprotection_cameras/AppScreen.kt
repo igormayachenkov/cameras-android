@@ -12,10 +12,12 @@ import ru.igormayachenkov.eprotection_cameras.auth.AuthViewModel
 fun AppScreen(){
     val viewModel: AuthViewModel = viewModel()
     //val auth by viewModel.auth.collectAsStateWithLifecycle(AuthData(null,null))
-    val authData by viewModel.authData.collectAsStateWithLifecycle(AuthData())
+    val authData by viewModel.authData.collectAsStateWithLifecycle(null)
 
-    if(!authData.isAuthorized)
-        AuthScreen()
-    else
-        WorkScreen(authData, viewModel::logout)
+    authData?.let {
+        if (!it.isAuthorized)
+            AuthScreen(it)
+        else
+            WorkScreen(it, viewModel::logout)
+    }
 }

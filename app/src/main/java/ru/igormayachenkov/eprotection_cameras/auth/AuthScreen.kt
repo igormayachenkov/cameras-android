@@ -9,18 +9,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 private const val TAG = "myapp.AuthScreen"
 
 @Composable
-fun AuthScreen() {
+fun AuthScreen(authData: AuthData) {
     val viewModel: AuthViewModel = viewModel()
-    val auth by viewModel.auth.collectAsStateWithLifecycle(AuthData(null,null))
-    val counter by viewModel.counter.collectAsStateWithLifecycle(initialValue = 13)
-    val authData by viewModel.authData.collectAsStateWithLifecycle(AuthData())
 
     Log.d(TAG,"=> authData: ${authData.toString()}")
 
     if(authData.ws==null)
         BeginView(
             auth=authData,
-            counter=counter,
             onOpenWorkspace = viewModel::openWorkspace
         )
     else if(authData.user==null)
@@ -30,4 +26,8 @@ fun AuthScreen() {
             onCloseWorkspace = viewModel::closeWorkspace
         )
 //    else internal error
+
+    // Examples
+//    val auth by viewModel.auth.collectAsStateWithLifecycle(AuthData(null,null))
+//    val counter by viewModel.counter.collectAsStateWithLifecycle(initialValue = 13)
 }

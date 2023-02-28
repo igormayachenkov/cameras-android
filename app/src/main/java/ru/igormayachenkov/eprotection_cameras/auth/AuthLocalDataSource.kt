@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -13,6 +14,7 @@ private val AUTH_DATA = stringPreferencesKey("auth_data")
 class AuthLocalDataSource(val dataStore: DataStore<Preferences>) {
     val data: Flow<AuthData> = dataStore.data
         .map { preferences ->
+            //delay(1500)
             readValue(preferences)
         }
     
