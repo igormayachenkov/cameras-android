@@ -1,27 +1,38 @@
 package ru.igormayachenkov.eprotection_cameras.auth
 
-import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
-    val repo = AuthRepo()
+    val repo = AuthRepository()
 
     val auth = repo.auth
 
+    val authData = repo.authDataFlow
+
+    val counter = repo.exampleCounterFlow
+
     fun openWorkspace(wsId:String){
-        repo.openWorkspace(wsId)
+        //repo.openWorkspace(wsId)
+        viewModelScope.launch {
+            //repo.incrementCounter()
+            repo.openWorkspace(wsId)
+        }
     }
     fun closeWorkspace(){
-        repo.closeWorkspace()
+        viewModelScope.launch {
+            repo.closeWorkspace()
+        }
     }
     fun login(login:String, password:String){
-        repo.login(login,password)
+        viewModelScope.launch {
+            repo.login(login, password)
+        }
     }
     fun logout(){
-        repo.logout()
+        viewModelScope.launch {
+            repo.logout()
+        }
     }
 }

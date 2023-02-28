@@ -11,9 +11,11 @@ import ru.igormayachenkov.eprotection_cameras.auth.AuthViewModel
 @Composable
 fun AppScreen(){
     val viewModel: AuthViewModel = viewModel()
-    val auth by viewModel.auth.collectAsStateWithLifecycle(AuthData(null,null))
-    if(!auth.isAuthorized)
+    //val auth by viewModel.auth.collectAsStateWithLifecycle(AuthData(null,null))
+    val authData by viewModel.authData.collectAsStateWithLifecycle(AuthData())
+
+    if(!authData.isAuthorized)
         AuthScreen()
     else
-        WorkScreen()
+        WorkScreen(authData, viewModel::logout)
 }

@@ -47,7 +47,7 @@ android {
 }
 
 dependencies {
-    def lifecycle_version = "2.6.0-beta01"
+    def lifecycle_version = "2.6.0-rc01"
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
@@ -58,6 +58,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
     //collectAsStateWithLifecycle
     implementation "androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version"
+    // Data Store
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
